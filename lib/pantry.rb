@@ -1,3 +1,4 @@
+require './lib/recipe'
 class Pantry
 
   attr_reader :stock

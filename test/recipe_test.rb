@@ -22,4 +22,5 @@ class RecipeTest < Minitest::Test
     r.add_ingredient("Flour", 500)
     assert_equal 500, r.amount_required("Flour")
   end
+  
 end
