@@ -1,4 +1,5 @@
 require './lib/recipe'
+require 'pry'
 class Pantry
 
   attr_reader :stock,
@@ -55,7 +56,7 @@ class Pantry
   def what_can_i_make
     suggestions = []
     cookbook.each do |recipe|
-      if have_ingredients?(recipe)
+      if have_ingredients?(recipe) 
         suggestions << recipe.name
       end
     end
@@ -63,14 +64,17 @@ class Pantry
   end
 
   def have_ingredients?(recipe)
-    recipe.ingredients.each do |ingredient, amount|
-      if stock[ingredient].nil?
+    true_or_false = recipe.ingredients.map do |ingredient, amount|
+      if stock[ingredient.downcase].nil?
         false
-      elsif stock[ingredient] >= amount
+      elsif stock[ingredient.downcase] >= amount
         true
       else
         false
       end
+    end
+    true_or_false.all? do |boolean|
+      boolean == true
     end
   end
 
