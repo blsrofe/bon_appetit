@@ -103,4 +103,19 @@ class PantryTest < Minitest::Test
     assert_equal ["Brine Shot", "Peanuts"], pantry.what_can_i_make
   end
 
+  def test_it_knows_if_it_has_ingredients
+    pantry = Pantry.new
+    r1 = Recipe.new("Cheese Pizza")
+
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+    pantry.restock("Cheese", 10)
+    pantry.restock("Flour", 20)
+
+    refute pantry.have_ingredients?(r1)
+
+    pantry.restock("Cheese", 10)
+    assert pantry.have_ingredients?(r1)
+  end
+
 end
