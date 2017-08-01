@@ -52,4 +52,26 @@ class Pantry
     cookbook << recipe
   end
 
+  def what_can_i_make
+    suggestions = []
+    cookbook.each do |recipe|
+      if have_ingredients?(recipe)
+        suggestions << recipe.name
+      end
+    end
+    suggestions
+  end
+
+  def have_ingredients?(recipe)
+    recipe.ingredients.each do |ingredient, amount|
+      if stock[ingredient].nil?
+        false
+      elsif stock[ingredient] >= amount
+        true
+      else
+        false
+      end
+    end
+  end
+
 end
