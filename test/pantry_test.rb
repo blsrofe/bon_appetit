@@ -171,6 +171,7 @@ class PantryTest < Minitest::Test
   end
 
   def test_it_can_transform_amounts_to_an_array
+    skip
     pantry = Pantry.new
 
     expected_1 = [{quantity: 25, units: "Milli-Units"},
