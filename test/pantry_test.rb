@@ -142,4 +142,15 @@ class PantryTest < Minitest::Test
     assert_equal ({"Brine Shot" => 4, "Peanuts" => 2}), pantry.how_many_can_i_make
   end
 
+  def test_it_knows_of_one_recipe_it_can_make
+    pantry = Pantry.new
+    r1 = Recipe.new("Cheese Pizza")
+    r1.add_ingredient("Cheese", 20)
+    r1.add_ingredient("Flour", 20)
+    pantry.restock("Cheese", 40)
+    pantry.restock("Flour", 60)
+
+    assert_equal 2, pantry.how_many(r1)
+  end
+
 end

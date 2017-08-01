@@ -90,10 +90,9 @@ class Pantry
   end
 
   def how_many(recipe)
-    amount_possible = []
-    recipe.ingredients.each do |ingredient, amount|
+    amount_possible = recipe.ingredients.map do |ingredient, amount|
       pantry_amount = stock[ingredient.downcase]
-      amount_possible << pantry_amount/amount
+      pantry_amount/amount
     end
     amount_possible.min
   end
