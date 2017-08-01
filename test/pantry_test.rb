@@ -45,4 +45,20 @@ class PantryTest < Minitest::Test
     assert_equal expected, pantry.convert_units(r)
   end
 
+  def test_it_can_transform_amounts_to_a_new_hash
+    pantry = Pantry.new
+
+    amount = 500
+    expected = {quantity: 5, units: "Centi-Units"}
+    assert_equal expected, pantry.transform(amount)
+
+    amount_2 = 75
+    expected_2 = {quantity: 75, units: "Universal Units"}
+    assert_equal expected_2, pantry.transform(amount_2)
+
+    amount_3 = 0.025
+    expected_3 = {quantity: 25, units: "Milli-Units"}
+    assert_equal expected_3, pantry.transform(amount_3)
+  end
+
 end

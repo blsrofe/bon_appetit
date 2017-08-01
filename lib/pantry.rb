@@ -34,13 +34,13 @@ class Pantry
   def transform(amount)
     transformed_collection = {}
     if amount > 100
-      transformed_collection[:quantity] = amount * 100
+      transformed_collection[:quantity] = amount / 100
       transformed_collection[:units] = "Centi-Units"
     elsif amount < 1
-      transformed_collection[:quantity] = amount
+      transformed_collection[:quantity] = amount * 1000
       transformed_collection[:units] = "Milli-Units"
     else
-      transformed_collection[:quantity] = amount / 1000
+      transformed_collection[:quantity] = amount
       transformed_collection[:units] = "Universal Units"
     end
     transformed_collection
