@@ -56,7 +56,7 @@ class Pantry
   def what_can_i_make
     suggestions = []
     cookbook.each do |recipe|
-      if have_ingredients?(recipe) 
+      if have_ingredients?(recipe)
         suggestions << recipe.name
       end
     end
@@ -76,6 +76,26 @@ class Pantry
     true_or_false.all? do |boolean|
       boolean == true
     end
+  end
+
+  def how_many_can_i_make
+    suggestions = {}
+    cookbook.each do |recipe|
+      if have_ingredients?(recipe)
+        number = how_many(recipe)
+        suggestions[recipe.name] = number
+      end
+    end
+    suggestions
+  end
+
+  def how_many(recipe)
+    amount_possible = []
+    recipe.ingredients.each do |ingredient, amount|
+      pantry_amount = stock[ingredient.downcase]
+      amount_possible << pantry_amount/amount
+    end
+    amount_possible.min
   end
 
 end
