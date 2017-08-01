@@ -154,6 +154,7 @@ class PantryTest < Minitest::Test
   end
 
   def test_it_can_convert_units_that_are_not_evenly_divisible
+    skip
     r = Recipe.new("Spicy Cheese Pizza")
     r.add_ingredient("Cayenne Pepper", 1.025)
     r.add_ingredient("Cheese", 75)
@@ -169,4 +170,18 @@ class PantryTest < Minitest::Test
     assert_equal expected, pantry.convert_units(r)
   end
 
+  def test_it_can_transform_amounts_to_an_array
+    pantry = Pantry.new
+
+    expected_1 = [{quantity: 25, units: "Milli-Units"},
+                 {quantity: 1, units: "Universal Units"}]
+    assert_equal expected_1, pantry.transform_array(1.025)
+
+    expected_2 = [{quantity: 75, units: "Universal Units"}]
+    assert_equal expected_2, pantry.transform_array(75)
+
+    expected_3 = [{quantity: 5, units: "Centi-Units"},
+                {quantity: 50, units: "Universal Units"}]
+    assert_equal expected_3, pantry.transform_array(550)
+  end
 end

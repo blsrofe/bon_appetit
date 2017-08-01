@@ -34,20 +34,20 @@ class Pantry
     recipe.ingredients
   end
 
-  def transform(amount)
-    transformed_collection = {}
-    if amount > 100
-      transformed_collection[:quantity] = amount / 100
-      transformed_collection[:units] = "Centi-Units"
-    elsif amount < 1
-      transformed_collection[:quantity] = amount * 1000
-      transformed_collection[:units] = "Milli-Units"
-    else
-      transformed_collection[:quantity] = amount
-      transformed_collection[:units] = "Universal Units"
-    end
-    transformed_collection
-  end
+  # def transform(amount)
+  #   transformed_collection = {}
+  #   if amount > 100
+  #     transformed_collection[:quantity] = amount / 100
+  #     transformed_collection[:units] = "Centi-Units"
+  #   elsif amount < 1
+  #     transformed_collection[:quantity] = amount * 1000
+  #     transformed_collection[:units] = "Milli-Units"
+  #   else
+  #     transformed_collection[:quantity] = amount
+  #     transformed_collection[:units] = "Universal Units"
+  #   end
+  #   transformed_collection
+  # end
 
   def add_to_cookbook(recipe)
     cookbook << recipe
@@ -95,6 +95,43 @@ class Pantry
       pantry_amount/amount
     end
     amount_possible.min
+  end
+
+  def transform_array(amount)
+    final = []
+    transformed_collection = {}
+    transformed_collection_2 = {}
+    if amount < 1
+      transformed_collection[:quantity] = amount * 1000
+      transformed_collection[:units] = "Milli-Units"
+      final << transformed_collection
+    elsif amount > 100 && amount % 100 == 0
+      transformed_collection[:quantity] = amount / 100
+      transformed_collection[:units] = "Centi-Units"
+      final << transformed_collection
+    elsif amount > 100
+      balance = amount % 100
+      transformed_collection[:quantity] = amount / 100
+      transformed_collection[:units] = "Centi-Units"
+      final << transformed_collection
+      transformed_collection_2[:quantity] = balance
+      transformed_collection_2[:units] = "Universal Units"
+      final << transformed_collection_2
+    elsif amount.is_a?(Integer)
+      transformed_collection[:quantity] = amount
+      transformed_collection[:units] = "Universal Units"
+      final << transformed_collection
+    else
+      decimal = (amount - amount.to_i)
+      whole = amount - decimal
+      transformed_collection[:quantity] = (decimal * 1000).round
+      transformed_collection[:units] = "Milli-Units"
+      final << transformed_collection
+      transformed_collection_2[:quantity] = whole.to_i
+      transformed_collection_2[:units] = "Universal Units"
+      final << transformed_collection_2
+    end
+    final
   end
 
 end
